@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ゲームイベント進捗管理カレンダー</title>
+    <title>QMA イベント進捗管理カレンダー</title>
     <style>
         * {
             margin: 0;
@@ -343,22 +343,21 @@
             <div class="instruction-content">
                 <h3>🎯 基本操作</h3>
                 <ul>
-                    <li><strong>チェックボックス連動機能</strong>：任意の日の「ゴール1」または「ゴール2」にチェックを入れると、<span class="highlight">同じカテゴリーの全ての日</span>のチェックボックスが同時にチェックされます</li>
+                    <li><strong>チェックボックス連動機能</strong>：任意の日の「凶」または「大凶」にチェックを入れると、<span class="highlight">同じカテゴリーの全ての日</span>のチェックボックスが同時にチェックされます</li>
                     <li><strong>進捗保存</strong>：チェック状態は自動的に保存され、ブラウザを閉じても保持されます</li>
-                    <li><strong>個別管理</strong>：ゴール1とゴール2はそれぞれ独立して管理できます</li>
+                    <li><strong>個別管理</strong>：チェックボックスはそれぞれ独立して管理できます</li>
                 </ul>
                 
                 <h3>⚠️ 注意事項</h3>
                 <ul>
                     <li><strong>ブラウザ依存</strong>：進捗データはこのブラウザにのみ保存されます。別のブラウザや端末では引き継がれません</li>
                     <li><strong>データクリア</strong>：ブラウザのデータを削除すると進捗がリセットされます</li>
-                    <li><strong>カテゴリー単位</strong>：チェックはカテゴリー単位で連動するため、個別の日だけをチェックすることはできません</li>
                 </ul>
             </div>
         </div>
 
         <div class="calendar">
-            <div class="calendar-header">イベントカレンダー（7月28日〜8月26日）</div>
+            <div class="calendar-header">QMA イベントカレンダー（7月28日〜8月26日）</div>
             <div class="weekdays">
                 <div class="weekday sunday">日</div>
                 <div class="weekday">月</div>
@@ -558,7 +557,7 @@
                 goal1Checkbox.addEventListener('change', handleCheckboxChange);
                 
                 const goal1Label = document.createElement('label');
-                goal1Label.textContent = 'ゴール1';
+                goal1Label.textContent = '凶';
                 goal1Label.addEventListener('click', () => goal1Checkbox.click());
                 
                 goal1Group.appendChild(goal1Checkbox);
@@ -575,7 +574,7 @@
                 goal2Checkbox.addEventListener('change', handleCheckboxChange);
                 
                 const goal2Label = document.createElement('label');
-                goal2Label.textContent = 'ゴール2';
+                goal2Label.textContent = '大凶';
                 goal2Label.addEventListener('click', () => goal2Checkbox.click());
                 
                 goal2Group.appendChild(goal2Checkbox);
