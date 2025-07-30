@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゲームイベント進捗管理カレンダー</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5e6b8;
+            padding: 20px;
+        }
+
+        .calendar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .calendar {
+            background: white;
+            border: 2px solid #333;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            background: #e6e6e6;
+            border-bottom: 2px solid #333;
+            text-align: center;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background: #f0f0f0;
+        }
+
+        .weekday {
+            padding: 12px 8px;
+            text-align: center;
+            border-right: 1px solid #ccc;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .weekday:last-child {
+            border-right: none;
+        }
+
+        .weekday.sunday {
+            background: #ffe6e6;
+            color: #d63384;
+        }
+
+        .weekday.saturday {
+            background: #e6f3ff;
+            color: #0066cc;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .day-cell {
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            min-height: 140px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .day-cell:nth-child(7n) {
+            border-right: none;
+        }
+
+        .day-cell.sunday {
+            background: #fef8f8;
+        }
+
+        .day-cell.saturday {
+            background: #f8fbff;
+        }
+
+        .day-cell.other-month {
+            background: #f8f8f8;
+            color: #999;
+        }
+
+        .day-number {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .day-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: #ddd;
+            border: 2px solid #999;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .category-name {
+            font-size: 11px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .checkboxes {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 10px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .instructions {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .instructions h3 {
+            color: #555;
+            margin: 15px 0 10px 0;
+            font-size: 18px;
+        }
+
+        .instruction-content ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .instruction-content li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .footer-info {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .footer-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+
+        .category-item-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .category-item-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tip {
+            background: #e7f3ff;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #0066cc;
+            margin: 0;
+            font-size: 14px;
+        }
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .instructions, .footer-info {
+                padding: 15px;
+            }
+
+            .instructions h2 {
+                font-size: 20px;
+            }
+
+            .instructions h3, .footer-info h3 {
+                font-size: 16px;
+            }
+
+            .category-list {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-header {
+                font-size: 20px;
+                padding: 10px;
+            }
+
+            .day-cell {
+                min-height: 120px;
+                padding: 6px;
+            }
+
+            .category-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 10px;
+            }
+
+            .category-name {
+                font-size: 10px;
+            }
+
+            .day-number {
+                font-size: 16px;
+            }
+
+            .checkboxes {
+                gap: 10px;
+            }
+
+            .checkbox-group input[type="checkbox"] {
+                width: 14px;
+                height: 14px;
+            }
+
+            .checkbox-group label {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .instructions, .footer-info {
+                padding: 12px;
+            }
+
+            .day-cell {
+                min-height: 100px;
+                padding: 4px;
+            }
+
+            .category-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 9px;
+            }
+
+            .category-name {
+                font-size: 9px;
+            }
+
+            .checkboxes {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="instructions">
+            <h2>📋 使い方</h2>
+            <div class="instruction-content">
+                <h3>🎯 基本操作</h3>
+                <ul>
+                    <li><strong>チェックボックス連動機能</strong>：任意の日の「ゴール1」または「ゴール2」にチェックを入れると、<span class="highlight">同じカテゴリーの全ての日</span>のチェックボックスが同時にチェックされます</li>
+                    <li><strong>進捗保存</strong>：チェック状態は自動的に保存され、ブラウザを閉じても保持されます</li>
+                    <li><strong>個別管理</strong>：ゴール1とゴール2はそれぞれ独立して管理できます</li>
+                </ul>
+                
+                <h3>⚠️ 注意事項</h3>
+                <ul>
+                    <li><strong>ブラウザ依存</strong>：進捗データはこのブラウザにのみ保存されます。別のブラウザや端末では引き継がれません</li>
+                    <li><strong>データクリア</strong>：ブラウザのデータを削除すると進捗がリセットされます</li>
+                    <li><strong>カテゴリー単位</strong>：チェックはカテゴリー単位で連動するため、個別の日だけをチェックすることはできません</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="calendar">
+            <div class="calendar-header">イベントカレンダー（7月28日〜8月26日）</div>
+            <div class="weekdays">
+                <div class="weekday sunday">日</div>
+                <div class="weekday">月</div>
+                <div class="weekday">火</div>
+                <div class="weekday">水</div>
+                <div class="weekday">木</div>
+                <div class="weekday">金</div>
+                <div class="weekday saturday">土</div>
+            </div>
+            <div class="calendar-grid" id="event-calendar"></div>
+        </div>
+
+        <div class="footer-info">
+            <h3>📊 カテゴリー一覧</h3>
+            <div class="category-list" id="category-list"></div>
+            <p class="tip">💡 <strong>ヒント</strong>：同じ色・アイコンの日は同じカテゴリーです。一つをチェックすると全て連動します！</p>
+        </div>
+    </div>
+
+    <script>
+        // カテゴリーの定義
+        const categories = {
+            '平成ゲーム': { icon: '🎮', color: '#4a90e2' },
+            '声優・吹き替え': { icon: '🎭', color: '#f5a623' },
+            'プロ野球': { icon: '⚾', color: '#d0021b' },
+            'アニマル': { icon: '🐾', color: '#7ed321' },
+            '地学': { icon: '🌍', color: '#8b572a' },
+            '漢字・四字熟語': { icon: '漢', color: '#9013fe' },
+            'アメリカ': { icon: '🇺🇸', color: '#bd10e0' },
+            'ホラー': { icon: '👻', color: '#50e3c2' },
+            '少年漫画': { icon: '📚', color: '#b8e986' },
+            'アニメソング': { icon: '🎵', color: '#4bd865' },
+            'JPOP': { icon: '🎤', color: '#417505' },
+            '乗り物': { icon: '🚗', color: '#9b59b6' },
+            '昭和歌謡': { icon: '🎶', color: '#e67e22' },
+            'テーマパーク&レジャー': { icon: '🎡', color: '#e74c3c' }
+        };
+
+        // イベントスケジュール（実際の画像に基づく）
+        const eventSchedule = {
+            // 7月
+            '2024-07-28': '平成ゲーム',
+            '2024-07-29': '声優・吹き替え',
+            '2024-07-30': 'プロ野球',
+            '2024-07-31': 'アニマル',
+            // 8月
+            '2024-08-01': '地学',
+            '2024-08-02': '平成ゲーム',
+            '2024-08-03': '声優・吹き替え',
+            '2024-08-04': '漢字・四字熟語',
+            '2024-08-05': 'アメリカ',
+            '2024-08-06': 'ホラー',
+            '2024-08-07': '少年漫画',
+            '2024-08-08': 'アニメソング',
+            '2024-08-09': 'プロ野球',
+            '2024-08-10': 'アニマル',
+            '2024-08-11': '漢字・四字熟語',
+            '2024-08-12': 'アメリカ',
+            '2024-08-13': 'ホラー',
+            '2024-08-14': '少年漫画',
+            '2024-08-15': 'アニメソング',
+            '2024-08-16': 'JPOP',
+            '2024-08-17': '乗り物',
+            '2024-08-18': '昭和歌謡',
+            '2024-08-19': 'テーマパーク&レジャー',
+            '2024-08-20': 'JPOP',
+            '2024-08-21': '地学',
+            '2024-08-22': '平成ゲーム',
+            '2024-08-23': '昭和歌謡',
+            '2024-08-24': 'テーマパーク&レジャー',
+            '2024-08-25': '乗り物',
+            '2024-08-26': 'アニメソング'
+        };
+
+        // ローカルストレージのキー
+        const STORAGE_KEY = 'game_event_progress';
+
+        // 進捗状況の読み込み
+        function loadProgress() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : {};
+        }
+
+        // 進捗状況の保存
+        function saveProgress(progress) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        }
+
+        // 日付文字列を生成
+        function getDateString(year, month, day) {
+            return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        }
+
+        // チェックボックスの変更処理
+        function handleCheckboxChange(event) {
+            const checkbox = event.target;
+            const dateStr = checkbox.dataset.date;
+            const goalType = checkbox.dataset.goal;
+            const category = eventSchedule[dateStr];
+            
+            if (!category) return;
+
+            const progress = loadProgress();
+            
+            // 同じカテゴリーの全ての日のチェックボックスを更新
+            Object.entries(eventSchedule).forEach(([date, cat]) => {
+                if (cat === category) {
+                    if (!progress[date]) progress[date] = {};
+                    progress[date][goalType] = checkbox.checked;
+                    
+                    // UIの更新
+                    const targetCheckbox = document.querySelector(`input[data-date="${date}"][data-goal="${goalType}"]`);
+                    if (targetCheckbox) {
+                        targetCheckbox.checked = checkbox.checked;
+                    }
+                }
+            });
+
+            saveProgress(progress);
+        }
+
+        // カレンダーを生成（イベント期間のみ）
+        function generateEventCalendar() {
+            const container = document.getElementById('event-calendar');
+            
+            // 2024年7月28日が月曜日であることを基準に設定
+            const startDate = new Date(2024, 6, 28); // 7月28日（月曜日）
+            const endDate = new Date(2024, 7, 26);   // 8月26日（火曜日）
+            
+            // 開始日の曜日（月曜日 = 1）
+            const startDayOfWeek = 1;
+            
+            // カレンダーの開始を日曜日にするため、前の日曜日から開始
+            const calendarStart = new Date(startDate);
+            calendarStart.setDate(calendarStart.getDate() - startDayOfWeek);
+            
+            // 現在の日付
+            let currentDate = new Date(calendarStart);
+            
+            // カレンダーを6週間表示（42日）
+            for (let i = 0; i < 42; i++) {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth() + 1;
+                const day = currentDate.getDate();
+                const dayOfWeek = currentDate.getDay();
+                
+                // イベント期間内かどうかを判定
+                const isInEventPeriod = currentDate >= startDate && currentDate <= endDate;
+                
+                const cell = createDayCell(year, month, day, isInEventPeriod, dayOfWeek);
+                container.appendChild(cell);
+                
+                // 次の日へ
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        }
+
+        // カレンダーセルを作成（修正版）
+        function createDayCell(year, month, day, isInEventPeriod, dayOfWeek) {
+            const dateStr = getDateString(year, month, day);
+            const category = eventSchedule[dateStr];
+            
+            const cell = document.createElement('div');
+            cell.className = `day-cell ${dayOfWeek === 0 ? 'sunday' : ''} ${dayOfWeek === 6 ? 'saturday' : ''} ${!isInEventPeriod ? 'other-month' : ''}`;
+            
+            const dayNumber = document.createElement('div');
+            dayNumber.className = 'day-number';
+            dayNumber.textContent = day;
+            
+            const dayContent = document.createElement('div');
+            dayContent.className = 'day-content';
+            
+            if (category && isInEventPeriod) {
+                const categoryInfo = categories[category];
+                
+                const icon = document.createElement('div');
+                icon.className = 'category-icon';
+                icon.style.backgroundColor = categoryInfo.color + '20';
+                icon.style.borderColor = categoryInfo.color;
+                icon.textContent = categoryInfo.icon;
+                
+                const name = document.createElement('div');
+                name.className = 'category-name';
+                name.textContent = category;
+                
+                const checkboxes = document.createElement('div');
+                checkboxes.className = 'checkboxes';
+                
+                // ゴール1チェックボックス
+                const goal1Group = document.createElement('div');
+                goal1Group.className = 'checkbox-group';
+                
+                const goal1Checkbox = document.createElement('input');
+                goal1Checkbox.type = 'checkbox';
+                goal1Checkbox.dataset.date = dateStr;
+                goal1Checkbox.dataset.goal = 'goal1';
+                goal1Checkbox.addEventListener('change', handleCheckboxChange);
+                
+                const goal1Label = document.createElement('label');
+                goal1Label.textContent = 'ゴール1';
+                goal1Label.addEventListener('click', () => goal1Checkbox.click());
+                
+                goal1Group.appendChild(goal1Checkbox);
+                goal1Group.appendChild(goal1Label);
+                
+                // ゴール2チェックボックス
+                const goal2Group = document.createElement('div');
+                goal2Group.className = 'checkbox-group';
+                
+                const goal2Checkbox = document.createElement('input');
+                goal2Checkbox.type = 'checkbox';
+                goal2Checkbox.dataset.date = dateStr;
+                goal2Checkbox.dataset.goal = 'goal2';
+                goal2Checkbox.addEventListener('change', handleCheckboxChange);
+                
+                const goal2Label = document.createElement('label');
+                goal2Label.textContent = 'ゴール2';
+                goal2Label.addEventListener('click', () => goal2Checkbox.click());
+                
+                goal2Group.appendChild(goal2Checkbox);
+                goal2Group.appendChild(goal2Label);
+                
+                checkboxes.appendChild(goal1Group);
+                checkboxes.appendChild(goal2Group);
+                
+                dayContent.appendChild(icon);
+                dayContent.appendChild(name);
+                dayContent.appendChild(checkboxes);
+            }
+            
+            cell.appendChild(dayNumber);
+            cell.appendChild(dayContent);
+            
+            return cell;
+        }
+
+        // 保存された進捗状況を復元
+        function restoreProgress() {
+            const progress = loadProgress();
+            
+            Object.entries(progress).forEach(([date, goals]) => {
+                Object.entries(goals).forEach(([goalType, checked]) => {
+                    const checkbox = document.querySelector(`input[data-date="${date}"][data-goal="${goalType}"]`);
+                    if (checkbox) {
+                        checkbox.checked = checked;
+                    }
+                });
+            });
+        }
+
+        // カテゴリー一覧を生成
+        function generateCategoryList() {
+            const container = document.getElementById('category-list');
+            
+            Object.entries(categories).forEach(([name, info]) => {
+                const item = document.createElement('div');
+                item.className = 'category-item';
+                
+                const icon = document.createElement('div');
+                icon.className = 'category-item-icon';
+                icon.style.backgroundColor = info.color + '20';
+                icon.style.border = `2px solid ${info.color}`;
+                icon.textContent = info.icon;
+                
+                const nameEl = document.createElement('div');
+                nameEl.className = 'category-item-name';
+                nameEl.textContent = name;
+                
+                item.appendChild(icon);
+                item.appendChild(nameEl);
+                container.appendChild(item);
+            });
+        }
+
+        // 初期化
+        function init() {
+            generateEventCalendar();
+            generateCategoryList();
+            restoreProgress();
+        }
+
+        // ページ読み込み時に初期化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
