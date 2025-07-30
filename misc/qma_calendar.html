@@ -250,13 +250,54 @@
             margin: 0;
             font-size: 14px;
         }
+
+        .copyright {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .copyright p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #0066cc;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 2px solid #0066cc;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .links a:hover {
+            background-color: #0066cc;
+            color: white;
+            transform: translateY(-2px);
+        }
         /* レスポンシブ対応 */
         @media (max-width: 768px) {
             body {
                 padding: 10px;
             }
 
-            .instructions, .footer-info {
+            .instructions, .footer-info, .copyright {
                 padding: 15px;
             }
 
@@ -270,6 +311,15 @@
 
             .category-list {
                 grid-template-columns: 1fr;
+            }
+
+            .links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .links a {
+                justify-content: center;
             }
 
             .calendar-header {
@@ -311,7 +361,7 @@
         }
 
         @media (max-width: 480px) {
-            .instructions, .footer-info {
+            .instructions, .footer-info, .copyright {
                 padding: 12px;
             }
 
@@ -375,6 +425,14 @@
             <h3>📊 カテゴリー一覧</h3>
             <div class="category-list" id="category-list"></div>
             <p class="tip">💡 <strong>ヒント</strong>：同じ色・アイコンの日は同じカテゴリーです。一つをチェックすると全て連動します！</p>
+    </div>
+
+    <div class="copyright">
+            <p>&copy; 2025 しぴちゃん</p>
+            <div class="links">
+                <a href="https://www.youtube.com/@CP-chan" target="_blank" rel="noopener noreferrer">📺 YouTube</a>
+                <a href="https://x.com/CPPP_CPchan" target="_blank" rel="noopener noreferrer">🐦 X (Twitter)</a>
+            </div>
         </div>
     </div>
 
