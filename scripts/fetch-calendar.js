@@ -42,7 +42,7 @@ async function fetchCalendarEvents() {
         end: event.end.dateTime || event.end.date,
         location: event.location || '',
         status: determineEventStatus(event),
-        tags: extractTags(event.summary, event.description),
+        tags: cleanDescription(extractTags(event.summary, event.description)),
         links: generateLinks(event)
       };
     });
@@ -126,8 +126,10 @@ function extractTags(title, description) {
 // HTMLタグを除去してプレーンテキストに変換する関数
 function cleanDescription(htmlDescription) {
   if (!htmlDescription) return '';
-  
-  // HTMLタグを除去
+
+  // 改行タグを改行文字に
+  let htmlDescription = htmlDescription.replace(/<br>/g, '\n');
+  // その他のHTMLタグを除去
   let cleaned = htmlDescription.replace(/<[^>]*>/g, '');
   
   // HTML エンティティをデコード
