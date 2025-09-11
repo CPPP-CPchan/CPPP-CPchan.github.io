@@ -125,10 +125,14 @@ function extractTags(title, description) {
 
 // HTMLタグを除去してプレーンテキストに変換する関数
 function cleanDescription(htmlDescription) {
-  if (!htmlDescription) return '';
-
+  // 値が存在しない、または文字列でない場合は空文字を返す
+  if (!htmlDescription || typeof htmlDescription !== 'string') {
+    return '';
+  }
+  
   // 改行タグを改行文字に
-  let newlinereplaced = htmlDescription.replace(/<br>/g, '\n');
+  let newlinereplaced = htmlDescription.replace(/<br\s*\/?>/gi, '\n');
+  
   // その他のHTMLタグを除去
   let cleaned = newlinereplaced.replace(/<[^>]*>/g, '');
   
@@ -143,8 +147,8 @@ function cleanDescription(htmlDescription) {
   
   // 連続する空白や改行を整理
   cleaned = cleaned
-    .replace(/\s+/g, ' ')  // 連続する空白を1つに
-    .replace(/\n\s*\n/g, '\n')  // 連続する改行を1つに
+    .replace(/\s+/g, ' ') // 連続する空白を1つに
+    .replace(/\n\s*\n/g, '\n') // 連続する改行を1つに
     .trim();
   
   return cleaned;
