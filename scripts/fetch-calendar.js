@@ -128,9 +128,9 @@ function cleanDescription(htmlDescription) {
   if (!htmlDescription) return '';
 
   // 改行タグを改行文字に
-  let htmlDescription = htmlDescription.replace(/<br>/g, '\n');
+  let newlinereplaced = htmlDescription.replace(/<br>/g, '\n');
   // その他のHTMLタグを除去
-  let cleaned = htmlDescription.replace(/<[^>]*>/g, '');
+  let cleaned = newlinereplaced.replace(/<[^>]*>/g, '');
   
   // HTML エンティティをデコード
   cleaned = cleaned
