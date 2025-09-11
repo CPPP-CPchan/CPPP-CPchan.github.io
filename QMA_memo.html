@@ -14,7 +14,8 @@
     <div class="works-header">
       <h1>QMA 検定メモ</h1>
       <p>QMAの検定配信などで作っているメモのまとめです。配信中にその場で回収しているので間違いがあるかも。<br>
-        スマホで見る際にはGoogleスプレッドシートのアプリで見るのがおすすめ。</p>
+        スマホで見る際にはGoogleスプレッドシートのアプリで見るのがおすすめ。
+        <br>まだデータ入れ終わってないので途中状態。</p>
     </div>
 
     <div class="search-filter">
@@ -36,34 +37,58 @@
     // === データ定義（ここを編集するだけでOK）===
     const examData = [
       {
-        name: "アニメ・ゲーム検定",
-        description: "アニメ・ゲーム検定のメモです。基本的な問題から応用まで。",
-        url: "https://docs.google.com/spreadsheets/d/example1"
+        name: "BEMANI MusiQ 2024年",
+        description: "MusiQのメモなんて他人が見てなんの役にも立たない気がするが、一応置いとく",
+        url: "https://docs.google.com/spreadsheets/d/11vQQrgLZjZ06AuH0n8kEFj7YyDPTA_btSn4-irmwiDs/edit?usp=sharing"
       },
       {
-        name: "スポーツ検定",
-        description: "スポーツ検定のメモです。野球、サッカー、バスケなど幅広く。",
-        url: "https://docs.google.com/spreadsheets/d/example2"
+        name: "QMA検定",
+        description: "QMA検定。画像問題が多いのでメモが難しい。難易度は低い。",
+        url: "https://docs.google.com/spreadsheets/d/1FBz6KOU_MKgMRP-2NrelVYqQgGhdBiE-nNs6QXDxO0w/edit?usp=sharing"
       },
       {
-        name: "芸能検定",
-        description: "芸能検定のメモです。俳優、歌手、タレントなど。",
-        url: "https://docs.google.com/spreadsheets/d/example3"
+        name: "SF検定",
+        description: "SF全般。小説とハリウッドが多いのだが、ガンダムとかも出る",
+        url: "https://docs.google.com/spreadsheets/d/1pQ5up5ZmDOHCedDJ5iVFmysBkMxxGSiANlSlt4yMNVo/edit?usp=sharing"
       },
       {
-        name: "文系学問検定",
-        description: "文系学問検定のメモです。歴史、文学、哲学など。",
-        url: "https://docs.google.com/spreadsheets/d/example4"
+        name: "アジア・オセアニア検定",
+        description: "海外の地域検定シリーズ。",
+        url: "https://docs.google.com/spreadsheets/d/1552X3tKC7wooND5WR5Sr8V-AkeP8e5pGkpsombQMOMs/edit?usp=sharing"
       },
       {
-        name: "理系学問検定",
-        description: "理系学問検定のメモです。数学、物理、化学、生物など。",
-        url: "https://docs.google.com/spreadsheets/d/example5"
-      }
-      // 新しい検定を追加する場合は、上記の形式でここに追加するだけ
+        name: "アニマル検定",
+        description: "すぐ終わってしまったので全然メモがない。",
+        url: "https://docs.google.com/spreadsheets/d/1inLbdMB0QtrqWx9mTGG2F8r9MjmlfskVAM-seefomps/edit?usp=sharing"
+      },
+      {
+        name: "アニメソング検定",
+        description: "アニソン検定。難易度はともかく、問題数がめちゃくちゃ多いので注意",
+        url: "https://docs.google.com/spreadsheets/d/1oDBkATi5wVeQtYnHtpY58IfmKCLs-80y_5CYxwm3lxY/edit?usp=sharing"
+      },
+      {
+        name: "アメリカ検定",
+        description: "海外の地域検定シリーズ。地名、大統領などに加えてスポーツが出るのがやや珍しい",
+        url: "https://docs.google.com/spreadsheets/d/19yv0Wi2zCQi3lind2MwAfyMAxjac2KHmiBAQg2mgXI0/edit?usp=sharing"
+      },
+      {
+        name: "お金検定",
+        description: "通貨単位や貨幣制度だけでなく、税金や会計制度なども出る。すぐ終わってしまったのでメモがない。",
+        url: "https://docs.google.com/spreadsheets/d/1faaOiuOkDMzcuQX4pqb0b1GuI8Egkw7F2nPSENK1Z9k/edit?usp=sharing"
+      },
+      {
+        name: "お笑い検定",
+        description: "苦手。問題数が多い。マルチセレクト形式が多い。エフェもちょっと多い。",
+        url: "https://docs.google.com/spreadsheets/d/1qdn3uig894K0zXwXOs3p5bhx2OR8A_DaRWJYBo6zLhE/edit?usp=sharing"
+      },
+      {
+        name: "クラシック検定",
+        description: "楽曲、作曲家だけでなく演奏家も出る。連想やや多めで並べ替えが難しい",
+        url: "https://docs.google.com/spreadsheets/d/1EWAZ_8-J0kYPza12Hx4ic9kto16SKS8p_KufG5GvIug/edit?usp=sharing"
+      },
     ];
 
-    // === 以下は自動生成コード（基本的に編集不要）===
+    // カードを生成
     function generateWorkCards() {
       const worksGrid = document.getElementById('worksGrid');
       
@@ -82,7 +107,6 @@
       });
     }
 
-    // ページ読み込み時にカードを生成
     document.addEventListener('DOMContentLoaded', generateWorkCards);
 
     // 検索機能

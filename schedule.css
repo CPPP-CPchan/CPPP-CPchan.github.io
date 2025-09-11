@@ -1,0 +1,176 @@
+/* schedule.css */
+.schedule-card {
+  background: white;
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.schedule-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.schedule-card.live {
+  border-color: #ff4444;
+  background: linear-gradient(135deg, #fff 0%, #ffe8e8 100%);
+}
+
+.schedule-card.upcoming {
+  border-color: #44aa44;
+  background: linear-gradient(135deg, #fff 0%, #e8ffe8 100%);
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.schedule-date {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--main-color);
+}
+
+.schedule-time {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.schedule-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-live {
+  background: #ff4444;
+  color: white;
+}
+
+.status-upcoming {
+  background: #44aa44;
+  color: white;
+}
+
+.status-scheduled {
+  background: var(--accent-color);
+  color: var(--text-color);
+}
+
+.schedule-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 10px 0;
+  color: var(--text-color);
+}
+
+.schedule-description {
+  color: #666;
+  line-height: 1.5;
+  margin: 10px 0;
+}
+
+.schedule-tags {
+  margin-top: 15px;
+}
+
+.schedule-tag {
+  display: inline-block;
+  background: var(--accent-color);
+  color: var(--text-color);
+  padding: 3px 8px;
+  margin: 2px 4px 2px 0;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+.schedule-links {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.schedule-link {
+  display: inline-block;
+  background: var(--main-color);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: background 0.2s ease;
+}
+
+.schedule-link:hover {
+  background: var(--accent-color);
+  color: var(--text-color);
+}
+
+.schedule-link.youtube {
+  background: #ff0000;
+}
+
+.schedule-link.youtube:hover {
+  background: #cc0000;
+}
+
+.schedule-link.twitter {
+  background: #1da1f2;
+}
+
+.schedule-link.twitter:hover {
+  background: #0d8bd9;
+}
+
+#loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+#no-schedule {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  color: #666;
+}
+
+.last-updated {
+  text-align: center;
+  font-size: 0.9em;
+  color: #999;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .schedule-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .schedule-links {
+    flex-direction: column;
+  }
+  
+  .schedule-link {
+    text-align: center;
+  }
+}

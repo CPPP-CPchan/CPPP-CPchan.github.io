@@ -1,0 +1,52 @@
+name: Update Schedule Data
+
+on:
+  schedule:
+    # 毎時0分に実行（UTC時間）
+    - cron: '0 * * * *'
+  workflow_dispatch: # 手動実行も可能
+
+jobs:
+  update-schedule:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm init -y
+        npm install googleapis
+        
+    - name: Create data directory
+      run: mkdir -p data
+      
+    - name: Fetch calendar data
+      env:
+        GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      run: node scripts/fetch-calendar.js
+      
+    - name: Check for changes
+      id: changes
+      run: |
+        if git diff --quiet data/schedule-data.json; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Commit and push changes
+      if: steps.changes.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/schedule-data.json
+        git commit -m "Update schedule data $(date '+%Y-%m-%d %H:%M:%S UTC')"
+        git push

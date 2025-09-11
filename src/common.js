@@ -9,7 +9,7 @@ const headerTemplate = `
     <ul>
       <li><a href="index.html">ホーム</a></li>
       <li><a href="index.html#about">自己紹介</a></li>
-      <li><a href="#">配信予定（まだないよ）</a></li>
+      <li><a href="schedule.html">配信予定</a></li>
       <li><a href="works.html">制作物</a></li>
       <li><a href="https://note.com/cppp_cpchan/">note （まじめなやつ）</a></li>      
       <li><a href="#">ブログ（まだないよ）</a></li>

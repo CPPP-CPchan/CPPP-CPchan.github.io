@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>配信予定 - しぴちゃん公式サイト</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="schedule.css">
+</head>
+
+<body>
+  <div id="header-container"></div>
+
+  <main>
+    <section id="schedule">
+      <h2>配信予定</h2>
+      <p>今後1週間の配信予定です。変更の可能性があります。</p>
+      
+      <div id="loading">
+        <p>配信予定を読み込み中...</p>
+      </div>
+      
+      <div id="schedule-container" style="display: none;">
+        <!-- 配信予定がここに動的に挿入されます -->
+      </div>
+      
+      <div id="no-schedule" style="display: none;">
+        <p>現在、予定されている配信はありません。</p>
+        <p>最新情報は<a href="https://x.com/CPPP_CPchan" target="_blank">X (Twitter)</a>をご確認ください。</p>
+      </div>
+    </section>
+
+    <section id="calendar-info">
+      <h3>配信予定について</h3>
+      <p>
+        配信予定は毎時間自動更新されます。<br>
+        急な変更やゲリラ配信については<a href="https://x.com/CPPP_CPchan" target="_blank">X (Twitter)</a>でお知らせします。
+      </p>
+      <div class="links">
+        <a class="btn" href="index.html">トップページに戻る</a>
+        <a class="btn" href="https://www.youtube.com/@CP-chan" target="_blank">YouTubeチャンネル</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+  <script src="src/common.js"></script>
+  <script src="src/schedule.js"></script>
+</body>
+</html>
