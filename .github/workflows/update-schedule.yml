@@ -6,6 +6,10 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch: # 手動実行も可能
 
+# 権限を明示的に設定
+permissions:
+  contents: write  # ファイルの読み書き権限
+
 jobs:
   update-schedule:
     runs-on: ubuntu-latest
@@ -13,6 +17,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        # 最新の変更を確実に取得
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -33,20 +41,56 @@ jobs:
         GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       run: node scripts/fetch-calendar.js
       
+    - name: Check if file exists and show content
+      run: |
+        if [ -f "data/schedule-data.json" ]; then
+          echo "✅ schedule-data.json が作成されました"
+          echo "ファイルサイズ: $(wc -c < data/schedule-data.json) bytes"
+          echo "最初の5行:"
+          head -5 data/schedule-data.json
+        else
+          echo "❌ schedule-data.json が見つかりません"
+          exit 1
+        fi
+      
     - name: Check for changes
       id: changes
       run: |
-        if git diff --quiet data/schedule-data.json; then
+        git add data/schedule-data.json
+        if git diff --cached --quiet; then
+          echo "変更なし"
           echo "changed=false" >> $GITHUB_OUTPUT
         else
+          echo "変更あり"
           echo "changed=true" >> $GITHUB_OUTPUT
+          echo "変更内容:"
+          git diff --cached --name-only
         fi
         
     - name: Commit and push changes
       if: steps.changes.outputs.changed == 'true'
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add data/schedule-data.json
-        git commit -m "Update schedule data $(date '+%Y-%m-%d %H:%M:%S UTC')"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "🤖 Update schedule data - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+        
+        echo "📤 変更をプッシュ中..."
         git push
+        
+        if [ $? -eq 0 ]; then
+          echo "✅ プッシュ成功"
+        else
+          echo "❌ プッシュ失敗"
+          exit 1
+        fi
+        
+    - name: Show final status
+      run: |
+        echo "🔍 最終状態確認:"
+        echo "現在のブランチ: $(git branch --show-current)"
+        echo "最新コミット: $(git log --oneline -1)"
+        
+        if [ -f "data/schedule-data.json" ]; then
+          echo "📄 schedule-data.json の最終更新時刻:"
+          grep '"lastUpdated"' data/schedule-data.json || echo "lastUpdated フィールドが見つかりません"
+        fi
