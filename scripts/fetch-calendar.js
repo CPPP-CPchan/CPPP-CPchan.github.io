@@ -126,15 +126,24 @@ function extractTags(title, description) {
 function generateLinks(event) {
   const links = [];
   
-  // YouTube配信リンクを検索
+  // YouTube配信リンクを検索（より包括的なパターン）
   const description = event.description || '';
-  const youtubeMatch = description.match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=[\w-]+/);
-  if (youtubeMatch) {
-    links.push({
-      type: 'youtube',
-      text: 'YouTube配信',
-      url: youtubeMatch[0]
-    });
+  const youtubePatterns = [
+    /https?:\/\/(www\.)?youtube\.com\/watch\?v=[\w-]+/,
+    /https?:\/\/(www\.)?youtube\.com\/live\/[\w-]+/,
+    /https?:\/\/youtu\.be\/[\w-]+/
+  ];
+  
+  for (const pattern of youtubePatterns) {
+    const match = description.match(pattern);
+    if (match) {
+      links.push({
+        type: 'youtube',
+        text: 'YouTube配信',
+        url: match[0]
+      });
+      break; // 最初に見つかったものを使用
+    }
   }
   
   // デフォルトのYouTubeチャンネルリンク

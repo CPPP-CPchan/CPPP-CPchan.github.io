@@ -81,6 +81,23 @@
   margin: 10px 0;
 }
 
+.schedule-description a {
+  color: var(--main-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-color);
+  transition: color 0.2s ease;
+}
+
+.schedule-description a:hover {
+  color: var(--accent-color);
+  border-bottom-color: var(--main-color);
+}
+
+.schedule-description .hashtag {
+  color: var(--main-color);
+  font-weight: bold;
+}
+
 .schedule-tags {
   margin-top: 15px;
 }
