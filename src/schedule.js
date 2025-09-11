@@ -1,136 +1,164 @@
-// src/schedule.js
-document.addEventListener('DOMContentLoaded', async function() {
-  const loadingElement = document.getElementById('loading');
-  const containerElement = document.getElementById('schedule-container');
-  const noScheduleElement = document.getElementById('no-schedule');
+// scripts/fetch-calendar.js
+const { google } = require('googleapis');
+const fs = require('fs').promises;
+
+async function fetchCalendarEvents() {
+  const API_KEY = process.env.GOOGLE_API_KEY;
+  const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
+  
+  if (!API_KEY || !CALENDAR_ID) {
+    console.error('環境変数 GOOGLE_API_KEY および GOOGLE_CALENDAR_ID を設定してください');
+    process.exit(1);
+  }
 
   try {
-    // 配信予定データを読み込み
-    const response = await fetch('data/schedule-data.json');
-    if (!response.ok) {
-      throw new Error('配信予定データの読み込みに失敗しました');
-    }
+    const calendar = google.calendar({ version: 'v3', auth: API_KEY });
     
-    const data = await response.json();
+    // 現在時刻から1週間後まで
+    const timeMin = new Date().toISOString();
+    const timeMax = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
     
-    // ローディング非表示
-    loadingElement.style.display = 'none';
+    console.log(`カレンダーデータを取得中: ${timeMin} から ${timeMax}`);
     
-    if (data.events && data.events.length > 0) {
-      renderSchedule(data.events, data.lastUpdated);
-      containerElement.style.display = 'block';
-    } else {
-      noScheduleElement.style.display = 'block';
-    }
+    const response = await calendar.events.list({
+      calendarId: CALENDAR_ID,
+      timeMin: timeMin,
+      timeMax: timeMax,
+      singleEvents: true,
+      orderBy: 'startTime',
+      maxResults: 50
+    });
+
+    const events = response.data.items || [];
+    console.log(`${events.length}件のイベントを取得しました`);
+
+    // イベントデータを変換
+    const processedEvents = events.map(event => {
+      return {
+        id: event.id,
+        title: event.summary || '無題の配信',
+        description: event.description || '',
+        start: event.start.dateTime || event.start.date,
+        end: event.end.dateTime || event.end.date,
+        location: event.location || '',
+        status: determineEventStatus(event),
+        tags: extractTags(event.summary, event.description),
+        links: generateLinks(event)
+      };
+    });
+
+    // JSONデータを作成
+    const scheduleData = {
+      lastUpdated: new Date().toISOString(),
+      events: processedEvents,
+      metadata: {
+        timezone: 'Asia/Tokyo',
+        source: 'Google Calendar',
+        generatedBy: 'GitHub Actions'
+      }
+    };
+
+    // ファイルに保存
+    await fs.writeFile(
+      'data/schedule-data.json', 
+      JSON.stringify(scheduleData, null, 2),
+      'utf8'
+    );
+    
+    console.log('配信予定データを data/schedule-data.json に保存しました');
     
   } catch (error) {
-    console.error('配信予定の読み込みエラー:', error);
-    loadingElement.innerHTML = '<p>配信予定の読み込みに失敗しました。しばらく経ってから再度お試しください。</p>';
+    console.error('カレンダーデータの取得に失敗しました:', error);
+    process.exit(1);
   }
-});
+}
 
-function renderSchedule(events, lastUpdated) {
-  const container = document.getElementById('schedule-container');
+function determineEventStatus(event) {
+  const now = new Date();
+  const startTime = new Date(event.start.dateTime || event.start.date);
+  const endTime = event.end ? new Date(event.end.dateTime || event.end.date) : null;
   
-  events.forEach(event => {
-    const card = createScheduleCard(event);
-    container.appendChild(card);
+  // 配信中
+  if (startTime <= now && (!endTime || endTime > now)) {
+    return 'live';
+  }
+  
+  // 1時間以内に開始予定
+  const oneHour = 60 * 60 * 1000;
+  if (startTime > now && (startTime - now) <= oneHour) {
+    return 'upcoming';
+  }
+  
+  // それ以外は予定
+  return 'scheduled';
+}
+
+function extractTags(title, description) {
+  const tags = [];
+  const text = `${title} ${description}`.toLowerCase();
+  
+  // ハッシュタグを抽出
+  const hashtagMatches = text.match(/#[^\s#]+/g);
+  if (hashtagMatches) {
+    tags.push(...hashtagMatches);
+  }
+  
+  // ゲーム名を推測
+  const gameKeywords = {
+    'qma': 'QMA',
+    'クイズマジックアカデミー': 'QMA',
+    '麻雀': '麻雀',
+    'minecraft': 'Minecraft',
+    'マインクラフト': 'Minecraft',
+    '雑談': '雑談',
+    'zatsudan': '雑談'
+  };
+  
+  Object.entries(gameKeywords).forEach(([keyword, tag]) => {
+    if (text.includes(keyword) && !tags.includes(tag)) {
+      tags.push(tag);
+    }
   });
   
-  // 最終更新時刻を表示
-  if (lastUpdated) {
-    const updateInfo = document.createElement('div');
-    updateInfo.className = 'last-updated';
-    updateInfo.textContent = `最終更新: ${formatDate(new Date(lastUpdated))}`;
-    container.appendChild(updateInfo);
+  return tags;
+}
+
+function generateLinks(event) {
+  const links = [];
+  
+  // YouTube配信リンクを検索（より包括的なパターン）
+  const description = event.description || '';
+  const youtubePatterns = [
+    /https?:\/\/(www\.)?youtube\.com\/watch\?v=[\w-]+/,
+    /https?:\/\/(www\.)?youtube\.com\/live\/[\w-]+/,
+    /https?:\/\/youtu\.be\/[\w-]+/
+  ];
+  
+  for (const pattern of youtubePatterns) {
+    const match = description.match(pattern);
+    if (match) {
+      links.push({
+        type: 'youtube',
+        text: 'YouTube配信',
+        url: match[0]
+      });
+      break; // 最初に見つかったものを使用
+    }
   }
-}
-
-function createScheduleCard(event) {
-  const card = document.createElement('div');
-  card.className = `schedule-card ${getEventStatusClass(event.status)}`;
   
-  const startTime = new Date(event.start);
-  const endTime = event.end ? new Date(event.end) : null;
-  
-  card.innerHTML = `
-    <div class="schedule-header">
-      <div>
-        <div class="schedule-date">${formatDate(startTime)}</div>
-        <div class="schedule-time">${formatTime(startTime)}${endTime ? ' - ' + formatTime(endTime) : ''}</div>
-      </div>
-      <div class="schedule-status status-${event.status}">
-        ${getStatusText(event.status)}
-      </div>
-    </div>
-    
-    <div class="schedule-title">${escapeHtml(event.title)}</div>
-    
-    ${event.description ? `<div class="schedule-description">${escapeHtml(event.description)}</div>` : ''}
-    
-    ${event.tags && event.tags.length > 0 ? `
-      <div class="schedule-tags">
-        ${event.tags.map(tag => `<span class="schedule-tag">${escapeHtml(tag)}</span>`).join('')}
-      </div>
-    ` : ''}
-    
-    ${event.links && event.links.length > 0 ? `
-      <div class="schedule-links">
-        ${event.links.map(link => `
-          <a href="${escapeHtml(link.url)}" target="_blank" class="schedule-link ${link.type}">
-            ${escapeHtml(link.text)}
-          </a>
-        `).join('')}
-      </div>
-    ` : ''}
-  `;
-  
-  return card;
-}
-
-function getEventStatusClass(status) {
-  switch (status) {
-    case 'live': return 'live';
-    case 'upcoming': return 'upcoming';
-    case 'scheduled': return 'scheduled';
-    default: return 'scheduled';
+  // デフォルトのYouTubeチャンネルリンク
+  if (links.length === 0) {
+    links.push({
+      type: 'youtube',
+      text: 'YouTubeチャンネル',
+      url: 'https://www.youtube.com/@CP-chan'
+    });
   }
-}
-
-function getStatusText(status) {
-  switch (status) {
-    case 'live': return '配信中';
-    case 'upcoming': return 'まもなく';
-    case 'scheduled': return '予定';
-    default: return '予定';
-  }
-}
-
-function formatDate(date) {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   
-  const diffDays = Math.round((targetDate - today) / (1000 * 60 * 60 * 24));
-  
-  if (diffDays === 0) {
-    return '今日';
-  } else if (diffDays === 1) {
-    return '明日';
-  } else if (diffDays === -1) {
-    return '昨日';
-  } else {
-    const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
-    return `${date.getMonth() + 1}/${date.getDate()}(${weekdays[date.getDay()]})`;
-  }
+  return links;
 }
 
-function formatTime(date) {
-  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-}
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+// スクリプト実行
+if (require.main === module) {
+  fetchCalendarEvents();
 }
