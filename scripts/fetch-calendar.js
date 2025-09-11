@@ -123,6 +123,31 @@ function extractTags(title, description) {
   return tags;
 }
 
+// HTMLタグを除去してプレーンテキストに変換する関数
+function cleanDescription(htmlDescription) {
+  if (!htmlDescription) return '';
+  
+  // HTMLタグを除去
+  let cleaned = htmlDescription.replace(/<[^>]*>/g, '');
+  
+  // HTML エンティティをデコード
+  cleaned = cleaned
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ');
+  
+  // 連続する空白や改行を整理
+  cleaned = cleaned
+    .replace(/\s+/g, ' ')  // 連続する空白を1つに
+    .replace(/\n\s*\n/g, '\n')  // 連続する改行を1つに
+    .trim();
+  
+  return cleaned;
+}
+
 function generateLinks(event) {
   const links = [];
   

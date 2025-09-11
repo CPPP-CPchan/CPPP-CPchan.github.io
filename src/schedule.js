@@ -148,25 +148,13 @@ function processDescription(description) {
   // URLを自動リンク化
   processed = processed.replace(
     /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g,
-    '<a href="function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}" target="_blank" rel="noopener noreferrer">function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}</a>'
+    '<a href="function escapeHtml(text) { const div = document.createElement(\'div\'); div.textContent = text; return div.innerHTML; }" target="_blank" rel="noopener noreferrer">function escapeHtml(text) { const div = document.createElement(\'div\'); div.textContent = text; return div.innerHTML; }</a>'
   );
   
   // ハッシュタグを強調表示
   processed = processed.replace(
     /#[^\s#]+/g,
-    '<strong class="hashtag">function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}</strong>'
+    '<strong class="hashtag">function escapeHtml(text) { const div = document.createElement(\'div\'); div.textContent = text; return div.innerHTML; }</strong>'
   );
   
   return processed;
