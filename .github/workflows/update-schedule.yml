@@ -3,7 +3,7 @@ name: Update Schedule Data
 on:
   schedule:
     # 毎時0分に実行（UTC時間）
-    - cron: '0 * * * *'
+    - cron: '0,30 * * * *'
   workflow_dispatch: # 手動実行も可能
 
 # 権限を明示的に設定
