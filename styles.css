@@ -32,12 +32,25 @@ nav ul {
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap; /* 追加：折り返しを許可 */
+}
+
+nav li {
+  margin: 5px 0; /* 追加：縦の余白 */
 }
 
 nav a {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  display: block; /* 追加：クリック範囲を拡大 */
+  padding: 8px 12px; /* 追加：タッチしやすいサイズ */
+  border-radius: 4px; /* 追加：角丸 */
+  transition: background-color 0.3s; /* 追加：ホバー効果 */
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.1); /* 追加：ホバー効果 */
 }
 
 main {
@@ -73,4 +86,38 @@ footer {
   font-size: 0.9em;
   background: #ddd;
   margin-top: 40px;
+}
+
+/* スマートフォン対応 */
+@media (max-width: 768px) {
+  header {
+    padding: 15px 10px; /* ヘッダーの余白調整 */
+  }
+  
+  nav ul {
+    gap: 10px; /* 間隔を少し狭く */
+    padding: 0 10px; /* 左右に少し余白 */
+  }
+  
+  nav a {
+    padding: 10px 14px; /* タッチしやすいサイズに調整 */
+    font-size: 14px; /* 少し小さくして収まりやすく */
+  }
+  
+  main {
+    padding: 15px; /* メインコンテンツの余白調整 */
+  }
+}
+
+/* より小さい画面（スマートフォン縦向き）*/
+@media (max-width: 480px) {
+  nav ul {
+    gap: 8px;
+    padding: 0 5px;
+  }
+  
+  nav a {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
 }
