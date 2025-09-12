@@ -11,8 +11,8 @@ const headerTemplate = `
       <li><a href="index.html#about">自己紹介</a></li>
       <li><a href="schedule.html">配信予定</a></li>
       <li><a href="works.html">制作物</a></li>
-      <li><a href="https://note.com/cppp_cpchan/">note （まじめ）</a></li>      
-      <li><a href="#">ブログ（まだ）</a></li>
+      <li><a href="https://note.com/cppp_cpchan/">まじめnote</a></li>      
+      // <li><a href="#">ブログ（まだ）</a></li>
       <li><a href="https://marshmallow-qa.com/qeesq0ftfry6tne?t=oJwLKH&utm_medium=url_text&utm_source=promotion">おたより</a></li>
     </ul>
   </nav>
