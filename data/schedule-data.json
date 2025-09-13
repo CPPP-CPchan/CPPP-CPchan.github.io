@@ -1,24 +1,6 @@
 {
-  "lastUpdated": "2025-09-13T12:41:01.622Z",
-  "events": [
-    {
-      "id": "2h7hkh3ti2l81d20a51f77or7i",
-      "title": "麻雀",
-      "description": "麻雀のモチベあるけど忙しくてあんま打てない 配信URL: まだないよ #しぴぴぴ #配しぴ",
-      "start": "2025-09-13T20:00:00+09:00",
-      "end": "2025-09-13T22:00:00+09:00",
-      "location": "",
-      "status": "live",
-      "tags": "",
-      "links": [
-        {
-          "type": "youtube",
-          "text": "YouTubeチャンネル",
-          "url": "https://www.youtube.com/@CP-chan"
-        }
-      ]
-    }
-  ],
+  "lastUpdated": "2025-09-13T13:23:05.005Z",
+  "events": [],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
