@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-09-13T09:38:37.185Z",
+  "lastUpdated": "2025-09-13T10:20:38.412Z",
   "events": [
     {
       "id": "2h7hkh3ti2l81d20a51f77or7i",
@@ -8,7 +8,7 @@
       "start": "2025-09-13T20:00:00+09:00",
       "end": "2025-09-13T22:00:00+09:00",
       "location": "",
-      "status": "scheduled",
+      "status": "upcoming",
       "tags": "",
       "links": [
         {
