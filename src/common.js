@@ -12,7 +12,7 @@ const headerTemplate = `
       <li><a href="schedule.html">配信予定</a></li>
       <li><a href="works.html">制作物</a></li>
       <li><a href="https://note.com/cppp_cpchan/">まじめnote</a></li>      
-      <li><a href="https://marshmallow-qa.com/qeesq0ftfry6tne?t=oJwLKH&utm_medium=url_text&utm_source=promotion">おたより</a></li>
+      <li><a href="https://www.cppp-cpchan.org/index.html#contact">おたより</a></li>
     </ul>
   </nav>
 </header>
