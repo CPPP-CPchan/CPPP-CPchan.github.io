@@ -1,24 +1,6 @@
 {
-  "lastUpdated": "2025-09-25T14:45:42.356Z",
-  "events": [
-    {
-      "id": "06dalrocljassa8egos7mt3gti",
-      "title": "QMA新作 初見プレー",
-      "description": "",
-      "start": "2025-09-25T22:00:00+09:00",
-      "end": "2025-09-26T00:00:00+09:00",
-      "location": "",
-      "status": "live",
-      "tags": "",
-      "links": [
-        {
-          "type": "youtube",
-          "text": "YouTubeチャンネル",
-          "url": "https://www.youtube.com/@CP-chan"
-        }
-      ]
-    }
-  ],
+  "lastUpdated": "2025-09-25T15:25:05.809Z",
+  "events": [],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
