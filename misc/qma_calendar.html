@@ -561,7 +561,7 @@
                 const year = currentDate.getFullYear();
                 const month = currentDate.getMonth() + 1;
                 const day = currentDate.getDate();
-                const dayOfWeek = currentDate.getDay();
+                const dayOfWeek = (startDayOfWeek + i - 1) % 7; // 0=日曜, 6=土曜
                 
                 // イベント期間内かどうかを判定
                 const isInEventPeriod = currentDate >= startDate && currentDate <= endDate;
