@@ -1,6 +1,24 @@
 {
-  "lastUpdated": "2025-09-27T12:42:04.706Z",
-  "events": [],
+  "lastUpdated": "2025-09-27T13:23:45.930Z",
+  "events": [
+    {
+      "id": "48gtl5un0nemf6s4b9hc6glof2",
+      "title": "QMA 協力とソロクエ",
+      "description": "",
+      "start": "2025-09-27T22:30:00+09:00",
+      "end": "2025-09-28T00:00:00+09:00",
+      "location": "",
+      "status": "upcoming",
+      "tags": "",
+      "links": [
+        {
+          "type": "youtube",
+          "text": "YouTubeチャンネル",
+          "url": "https://www.youtube.com/@CP-chan"
+        }
+      ]
+    }
+  ],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
