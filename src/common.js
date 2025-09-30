@@ -1,18 +1,18 @@
 const headerTemplate = `
 <header>
   <div class="logo">
-    <img src="images/cpchan-goldrim.png" alt="しぴちゃん立ち絵">
+    <img src="/images/cpchan-goldrim.png" alt="しぴちゃん立ち絵">
     <h1>しぴちゃん</h1>
     <p>猫耳VTuber、ゆるっとゲームやってます</p>
   </div>
   <nav>
     <ul>
-      <li><a href="index.html">ホーム</a></li>
-      <li><a href="index.html#about">自己紹介</a></li>
-      <li><a href="schedule.html">配信予定</a></li>
-      <li><a href="works.html">制作物</a></li>
-      <li><a href="index.html#blogs">blog</a></li>      
-      <li><a href="https://www.cppp-cpchan.org/index.html#contact">おたより</a></li>
+      <li><a href="/index.html">ホーム</a></li>
+      <li><a href="/index.html#about">自己紹介</a></li>
+      <li><a href="/schedule.html">配信予定</a></li>
+      <li><a href="/works.html">制作物</a></li>
+      <li><a href="/index.html#blogs">blog</a></li>      
+      <li><a href="/index.html#contact">おたより</a></li>
     </ul>
   </nav>
 </header>
