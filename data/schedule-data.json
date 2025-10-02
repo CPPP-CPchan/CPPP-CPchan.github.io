@@ -1,23 +1,6 @@
 {
-  "lastUpdated": "2025-10-02T14:43:08.975Z",
+  "lastUpdated": "2025-10-02T15:23:53.930Z",
   "events": [
-    {
-      "id": "3l3aa8johaq81juajtdhbk26kt_20251002",
-      "title": "おやすみ",
-      "description": "",
-      "start": "2025-10-02",
-      "end": "2025-10-03",
-      "location": "",
-      "status": "live",
-      "tags": "",
-      "links": [
-        {
-          "type": "youtube",
-          "text": "YouTubeチャンネル",
-          "url": "https://www.youtube.com/@CP-chan"
-        }
-      ]
-    },
     {
       "id": "7s4ot1egecfc0rci0i48foco9o",
       "title": "QMA 現代文学検定",
