@@ -1,23 +1,6 @@
 {
-  "lastUpdated": "2025-10-11T14:38:12.013Z",
+  "lastUpdated": "2025-10-11T15:19:21.742Z",
   "events": [
-    {
-      "id": "5ra1k7rslnmjluo691psmtsjg9",
-      "title": "QMA アニマル検定",
-      "description": "",
-      "start": "2025-10-11T22:00:00+09:00",
-      "end": "2025-10-12T00:00:00+09:00",
-      "location": "",
-      "status": "live",
-      "tags": "",
-      "links": [
-        {
-          "type": "youtube",
-          "text": "YouTubeチャンネル",
-          "url": "https://www.youtube.com/@CP-chan"
-        }
-      ]
-    },
     {
       "id": "4ipto3hq7eknrbrrbmr2gioog3",
       "title": "サイレントヒルfの続き",
