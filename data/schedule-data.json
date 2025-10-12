@@ -1,24 +1,6 @@
 {
-  "lastUpdated": "2025-10-12T14:39:33.963Z",
-  "events": [
-    {
-      "id": "4ipto3hq7eknrbrrbmr2gioog3",
-      "title": "サイレントヒルfの続き",
-      "description": "",
-      "start": "2025-10-12T22:00:00+09:00",
-      "end": "2025-10-13T00:00:00+09:00",
-      "location": "",
-      "status": "live",
-      "tags": "",
-      "links": [
-        {
-          "type": "youtube",
-          "text": "YouTubeチャンネル",
-          "url": "https://www.youtube.com/@CP-chan"
-        }
-      ]
-    }
-  ],
+  "lastUpdated": "2025-10-12T15:20:09.123Z",
+  "events": [],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
