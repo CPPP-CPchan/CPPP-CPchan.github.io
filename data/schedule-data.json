@@ -1,6 +1,23 @@
 {
-  "lastUpdated": "2025-10-16T10:26:41.761Z",
+  "lastUpdated": "2025-10-16T10:45:45.053Z",
   "events": [
+    {
+      "id": "41vt9psn97rg3pdpi4rfd3l6gi",
+      "title": "QMA ソロクエとか協力とか",
+      "description": "",
+      "start": "2025-10-17T22:00:00+09:00",
+      "end": "2025-10-18T00:00:00+09:00",
+      "location": "",
+      "status": "scheduled",
+      "tags": "",
+      "links": [
+        {
+          "type": "youtube",
+          "text": "YouTubeチャンネル",
+          "url": "https://www.youtube.com/@CP-chan"
+        }
+      ]
+    },
     {
       "id": "4su5m2b6jrmcsmtkfdijugvudt",
       "title": "サイレントヒルfの続き？",
