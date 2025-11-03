@@ -1,6 +1,24 @@
 {
-  "lastUpdated": "2025-11-03T07:41:16.004Z",
-  "events": [],
+  "lastUpdated": "2025-11-03T08:34:19.212Z",
+  "events": [
+    {
+      "id": "fibfcp3cfvp9a4147hcpgqujdc",
+      "title": "おやすみ",
+      "description": "",
+      "start": "2025-11-03",
+      "end": "2025-11-04",
+      "location": "",
+      "status": "live",
+      "tags": "",
+      "links": [
+        {
+          "type": "youtube",
+          "text": "YouTubeチャンネル",
+          "url": "https://www.youtube.com/@CP-chan"
+        }
+      ]
+    }
+  ],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
