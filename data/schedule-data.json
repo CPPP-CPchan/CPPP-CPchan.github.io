@@ -1,24 +1,6 @@
 {
-  "lastUpdated": "2025-11-12T14:47:51.964Z",
-  "events": [
-    {
-      "id": "7dh6uc22a8i9bqkiojt7r30j1f",
-      "title": "QMA 日本地理検定",
-      "description": "",
-      "start": "2025-11-12T22:00:00+09:00",
-      "end": "2025-11-13T00:00:00+09:00",
-      "location": "",
-      "status": "live",
-      "tags": "",
-      "links": [
-        {
-          "type": "youtube",
-          "text": "YouTubeチャンネル",
-          "url": "https://www.youtube.com/@CP-chan"
-        }
-      ]
-    }
-  ],
+  "lastUpdated": "2025-11-12T15:28:11.026Z",
+  "events": [],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
