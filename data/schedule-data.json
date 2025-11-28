@@ -1,6 +1,24 @@
 {
-  "lastUpdated": "2025-11-28T04:32:24.418Z",
-  "events": [],
+  "lastUpdated": "2025-11-28T05:26:10.614Z",
+  "events": [
+    {
+      "id": "4gkjrlk4g7uflhd8e2a4r3igqp",
+      "title": "QMA ソロクエVH",
+      "description": "",
+      "start": "2025-11-28T22:00:00+09:00",
+      "end": "2025-11-29T00:00:00+09:00",
+      "location": "",
+      "status": "scheduled",
+      "tags": "",
+      "links": [
+        {
+          "type": "youtube",
+          "text": "YouTubeチャンネル",
+          "url": "https://www.youtube.com/@CP-chan"
+        }
+      ]
+    }
+  ],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
