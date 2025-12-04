@@ -1,24 +1,6 @@
 {
-  "lastUpdated": "2025-12-04T14:49:55.162Z",
-  "events": [
-    {
-      "id": "4ts3vmcts0uhr6n9k2bh6b48bv",
-      "title": "しぴ雀　三麻？",
-      "description": "",
-      "start": "2025-12-04T22:00:00+09:00",
-      "end": "2025-12-05T00:00:00+09:00",
-      "location": "",
-      "status": "live",
-      "tags": "",
-      "links": [
-        {
-          "type": "youtube",
-          "text": "YouTubeチャンネル",
-          "url": "https://www.youtube.com/@CP-chan"
-        }
-      ]
-    }
-  ],
+  "lastUpdated": "2025-12-04T15:29:45.139Z",
+  "events": [],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
