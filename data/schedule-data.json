@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-19T11:39:37.140Z",
+  "lastUpdated": "2026-04-19T13:13:43.650Z",
   "events": [
     {
       "id": "p5ftv2d8rhhundm1qj8g2hc56g",
@@ -8,7 +8,7 @@
       "start": "2026-04-19T22:00:00+09:00",
       "end": "2026-04-20T00:00:00+09:00",
       "location": "",
-      "status": "scheduled",
+      "status": "live",
       "tags": "",
       "links": [
         {
