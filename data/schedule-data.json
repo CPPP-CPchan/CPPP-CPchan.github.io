@@ -1,6 +1,41 @@
 {
-  "lastUpdated": "2026-04-22T05:38:03.083Z",
-  "events": [],
+  "lastUpdated": "2026-04-22T07:58:01.161Z",
+  "events": [
+    {
+      "id": "3lslqjq87ejai59s8u7hugjquc",
+      "title": "雀魂 イベントルールやる",
+      "description": "",
+      "start": "2026-04-22T20:00:00+09:00",
+      "end": "2026-04-22T22:00:00+09:00",
+      "location": "",
+      "status": "scheduled",
+      "tags": "",
+      "links": [
+        {
+          "type": "youtube",
+          "text": "YouTubeチャンネル",
+          "url": "https://www.youtube.com/@CP-chan"
+        }
+      ]
+    },
+    {
+      "id": "m8s1532jvvpauetsd5mfsva0ic",
+      "title": "QMA ジャンル協力",
+      "description": "",
+      "start": "2026-04-22T22:00:00+09:00",
+      "end": "2026-04-23T00:00:00+09:00",
+      "location": "",
+      "status": "scheduled",
+      "tags": "",
+      "links": [
+        {
+          "type": "youtube",
+          "text": "YouTubeチャンネル",
+          "url": "https://www.youtube.com/@CP-chan"
+        }
+      ]
+    }
+  ],
   "metadata": {
     "timezone": "Asia/Tokyo",
     "source": "Google Calendar",
