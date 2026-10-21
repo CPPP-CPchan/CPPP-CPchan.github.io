@@ -1,5 +1,5 @@
 // scripts/fetch-calendar.js
-const { google } = require('googleapis');
+// 依存パッケージなし（Node 18+ 標準の fetch で Google Calendar API v3 を直接呼ぶ）
 const fs = require('fs').promises;
 
 async function fetchCalendarEvents() {
@@ -12,7 +12,6 @@ async function fetchCalendarEvents() {
   }
 
   try {
-    const calendar = google.calendar({ version: 'v3', auth: API_KEY });
     
     // 現在時刻から1週間後まで
     const timeMin = new Date().toISOString();
@@ -20,14 +19,21 @@ async function fetchCalendarEvents() {
     
     console.log(`カレンダーデータを取得中: ${timeMin} から ${timeMax}`);
     
-    const response = await calendar.events.list({
-      calendarId: CALENDAR_ID,
+    const params = new URLSearchParams({
+      key: API_KEY,
       timeMin: timeMin,
       timeMax: timeMax,
-      singleEvents: true,
+      singleEvents: 'true',
       orderBy: 'startTime',
-      maxResults: 50
+      maxResults: '50'
     });
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?${params}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      // APIキーをログに出さないよう、URLは表示しない
+      throw new Error(`Google Calendar API error: HTTP ${res.status}`);
+    }
+    const response = { data: await res.json() };
 
     const events = response.data.items || [];
     console.log(`${events.length}件のイベントを取得しました`);
